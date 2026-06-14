@@ -773,12 +773,7 @@
 
       <!-- VIDEO -->
       <div class="video-wrap">
-        <iframe
-          src="https://www.youtube.com/embed/mBknZiLBKsg?start=204&end=280&rel=0&modestbranding=1&controls=0&disablekb=1&fs=0"
-          title="How Orthotripsy Ends Chronic Heel Pain"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+        <div id="yt-player"></div>
       </div>
 
     </div>
@@ -1250,6 +1245,50 @@
       // fetch('https://api.web3forms.com/submit', { method:'POST', ... })
       console.log('Form submitted:', data);
     }
+
+    // YouTube IFrame API — constrained clip player
+    const CLIP_START = 204; // 3:24
+    const CLIP_END   = 280; // 4:40
+    let ytPlayer, clipWatcher;
+
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player('yt-player', {
+        videoId: 'mBknZiLBKsg',
+        playerVars: {
+          start:          CLIP_START,
+          end:            CLIP_END,
+          rel:            0,
+          modestbranding: 1,
+          fs:             0,
+        },
+        events: {
+          onReady: function(e) {
+            e.target.seekTo(CLIP_START, true);
+          },
+          onStateChange: function(e) {
+            // YT.PlayerState.PLAYING = 1
+            if (e.data === 1) {
+              clearInterval(clipWatcher);
+              clipWatcher = setInterval(function() {
+                if (!ytPlayer) return;
+                const t = ytPlayer.getCurrentTime();
+                if (t < CLIP_START) ytPlayer.seekTo(CLIP_START, true);
+                if (t >= CLIP_END)  { ytPlayer.seekTo(CLIP_START, true); ytPlayer.pauseVideo(); }
+              }, 300);
+            } else {
+              clearInterval(clipWatcher);
+            }
+          }
+        }
+      });
+    };
+
+    // Load the IFrame API script
+    (function() {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    })();
 
     // Phone formatting
     document.getElementById('phone').addEventListener('input', function(e) {
