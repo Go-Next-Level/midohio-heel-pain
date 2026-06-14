@@ -200,53 +200,18 @@
       width: 100%;
       aspect-ratio: 16/9;
       max-width: 780px;
-      background: var(--surface);
+      background: #000;
       border: 1px solid var(--border);
       border-radius: 10px;
       overflow: hidden;
       margin: 0 auto 0;
-      cursor: pointer;
     }
-    .video-wrap::before {
-      content: '';
+    .video-wrap iframe {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(201,151,58,0.06) 0%, transparent 60%);
-    }
-    .video-thumb {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      opacity: 0.18;
-    }
-    .video-inner {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-    }
-    .play-btn {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 0 12px rgba(201,151,58,0.12), 0 0 0 24px rgba(201,151,58,0.06);
-      transition: transform 0.2s, background 0.2s;
-    }
-    .play-btn svg { margin-left: 4px; }
-    .video-wrap:hover .play-btn { transform: scale(1.08); background: var(--gold-lt); }
-    .video-caption {
-      font-size: 0.82rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-align: center;
+      border: none;
     }
 
     /* ─── TRUST STRIP ─── */
@@ -807,13 +772,13 @@
       </p>
 
       <!-- VIDEO -->
-      <div class="video-wrap" role="button" tabindex="0" aria-label="Watch: How Orthotripsy ends chronic heel pain">
-        <div class="video-inner">
-          <div class="play-btn" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="#08080a"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <p class="video-caption">Watch: How Orthotripsy Works</p>
-        </div>
+      <div class="video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/mBknZiLBKsg?start=204&rel=0&modestbranding=1"
+          title="How Orthotripsy Ends Chronic Heel Pain"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
       </div>
 
     </div>
@@ -1294,11 +1259,6 @@
       e.target.value = v;
     });
 
-    // Video placeholder click
-    document.querySelector('.video-wrap').addEventListener('click', function() {
-      // Replace with actual video embed
-      alert('Video coming soon — embed your VSL here.');
-    });
   </script>
 
 </body>
