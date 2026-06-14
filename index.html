@@ -358,7 +358,19 @@
       overflow: hidden;
       position: sticky;
       top: 80px;
+      max-height: calc(100vh - 100px);
+      display: flex;
+      flex-direction: column;
     }
+    .form-body {
+      overflow-y: auto;
+      flex: 1;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .form-body::-webkit-scrollbar { width: 4px; }
+    .form-body::-webkit-scrollbar-track { background: transparent; }
+    .form-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
     .form-header {
       background: linear-gradient(135deg, #1a1510 0%, #151208 100%);
       border-bottom: 1px solid var(--border);
