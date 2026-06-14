@@ -723,24 +723,49 @@
     /* ─── FOOTER ─── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 40px 0;
+      padding: 48px 0 36px;
       text-align: center;
     }
-    footer p {
-      font-size: 0.78rem;
-      color: #3a3832;
-      line-height: 1.7;
-      max-width: 640px;
-      margin: 0 auto;
-    }
-    footer a { color: var(--muted); text-decoration: none; }
+    footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
     footer a:hover { color: var(--text); }
     .footer-logo {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .footer-address {
+      font-size: 0.85rem;
       color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .footer-address a { color: var(--gold); }
+    .footer-address a:hover { color: var(--gold-lt); }
+    .footer-bbb {
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 0.8rem;
       margin-bottom: 16px;
+    }
+    .footer-sep { color: var(--border); }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: #3a4a60;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
     }
 
     /* ─── THUMBNAIL SWITCHER ─── */
@@ -1183,16 +1208,47 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <div class="footer-logo">Mid Ohio Foot & Ankle</div>
-      <p>
-        Lewis Center, Ohio &nbsp;·&nbsp;
-        <a href="https://midohiofootandankle.com" target="_blank" rel="noopener">midohiofootandankle.com</a>
-        <br><br>
+
+      <!-- Location & Contact -->
+      <div class="footer-contact">
+        <div class="footer-logo">Mid Ohio Foot & Ankle Specialists</div>
+        <p class="footer-address">
+          7100 Graphics Way #3300, Lewis Center, OH 43035<br>
+          <a href="tel:+17408793939">(740) 879-3939</a>
+        </p>
+      </div>
+
+      <!-- BBB Badge -->
+      <div class="footer-bbb">
+        <a href="https://www.bbb.org/us/oh/lewis-center/profile/podiatrist/mid-ohio-foot-and-ankle-specialists-0302-70142051/#sealclick"
+           target="_blank" rel="noopener noreferrer" aria-label="Mid Ohio Foot and Ankle Specialists BBB Business Review">
+          <img
+            src="https://seal-columbus.bbb.org/seals/blue-seal-250-52-bbb-70142051.png"
+            alt="Mid Ohio Foot and Ankle Specialists BBB Business Review"
+            style="height:52px;width:auto;"
+            onerror="this.style.display='none'"
+          />
+        </a>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-links">
+        <a href="https://midohiofootandankle.com/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
+        <span class="footer-sep">·</span>
+        <a href="https://midohiofootandankle.com/terms-of-service/" target="_blank" rel="noopener">Terms of Service</a>
+      </div>
+
+      <!-- Copyright & Disclaimer -->
+      <p class="footer-copy">
+        &copy; 2026 Mid Ohio Foot and Ankle Specialists. All Rights Reserved.
+      </p>
+      <p class="footer-disclaimer">
         This page is intended for informational purposes and to facilitate a consultation inquiry.
         Individual results vary. Orthotripsy (extracorporeal shockwave therapy) is a clinically
         established procedure; outcomes depend on patient-specific factors. Insurance coverage
         is not guaranteed and should be verified independently.
       </p>
+
     </div>
   </footer>
 
