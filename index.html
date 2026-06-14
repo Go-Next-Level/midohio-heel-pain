@@ -680,20 +680,24 @@
 
     .steps-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 2px;
     }
     .step-card {
       background: var(--surface);
-      padding: 32px 24px;
+      padding: 28px 24px;
       position: relative;
     }
-    .step-card:first-child { border-radius: 8px 0 0 8px; }
-    .step-card:last-child  { border-radius: 0 8px 8px 0; }
-    @media (max-width: 640px) {
+    .step-card:nth-child(1) { border-radius: 8px 0 0 0; }
+    .step-card:nth-child(2) { border-radius: 0 8px 0 0; }
+    .step-card:nth-child(3) { border-radius: 0 0 0 8px; }
+    .step-card:nth-child(4) { border-radius: 0 0 8px 0; }
+    @media (max-width: 540px) {
       .steps-grid { grid-template-columns: 1fr; gap: 2px; }
-      .step-card:first-child { border-radius: 8px 8px 0 0; }
-      .step-card:last-child  { border-radius: 0 0 8px 8px; }
+      .step-card:nth-child(1) { border-radius: 8px 8px 0 0; }
+      .step-card:nth-child(2) { border-radius: 0; }
+      .step-card:nth-child(3) { border-radius: 0; }
+      .step-card:nth-child(4) { border-radius: 0 0 8px 8px; }
     }
     .step-num {
       font-family: 'Bebas Neue', sans-serif;
@@ -750,11 +754,12 @@
   <!-- TOP BAR -->
   <header class="topbar">
     <div class="container topbar-inner">
-      <div class="brand">
-        Mid Ohio Foot & Ankle
-        <span>Lewis Center, Ohio</span>
-      </div>
-      <a href="#form-card" class="topbar-cta">Check Eligibility</a>
+      <img
+        src="https://midohiofootandankle.com/wp-content/uploads/elementor/thumbs/Mid-Ohio-Logo-new-version-rndg349zmceqqpr8c9z1578f1rf5ll9dv4lyk8qdq8.png"
+        alt="Mid Ohio Foot & Ankle"
+        style="height:44px;width:auto;filter:brightness(0) invert(1);"
+      />
+      <a href="#form-card" class="topbar-cta">Schedule Consultation</a>
     </div>
   </header>
 
@@ -781,6 +786,12 @@
           — because nothing else comes close.
         </p>
 
+        <!-- VIDEO LABEL -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gold);flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+          <span style="font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Watch this 1-minute clip — how to end your heel pain</span>
+        </div>
+
         <!-- VIDEO -->
         <div class="video-wrap">
           <iframe
@@ -792,25 +803,19 @@
         </div>
 
         <!-- TRUST STRIP -->
-        <div class="trust-strip" style="margin-top:40px;margin-left:-24px;margin-right:-24px;">
-          <div style="padding:0 24px;">
-            <div class="trust-items">
-              <div class="trust-item">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span><strong>No Surgery Required</strong></span>
-              </div>
-              <div class="trust-item">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span><strong>Same-Day Treatment</strong></span>
-              </div>
-              <div class="trust-item">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
-                <span>Patients travel from <strong>all 50 states</strong></span>
-              </div>
-              <div class="trust-item">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-                <span><strong>Plantar Fasciitis · Achilles Tendinitis</strong></span>
-              </div>
+        <div class="trust-strip" style="margin-top:32px;">
+          <div class="trust-items">
+            <div class="trust-item">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span><strong>No Surgery Required</strong></span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span><strong>Same-Day Treatment</strong></span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+              <span>Patients from <strong>all 50 states</strong></span>
             </div>
           </div>
         </div>
@@ -842,7 +847,7 @@
 
         <div class="stat-row">
           <div class="stat-box">
-            <span class="stat-num">91%</span>
+            <span class="stat-num">92%</span>
             <span class="stat-label">Success Rate</span>
           </div>
           <div class="stat-box">
@@ -857,7 +862,7 @@
 
         <div class="quote-block">
           <p>"We don't compromise the architecture of your foot to silence the pain. We restore it — the way it was designed to function."</p>
-          <div class="quote-attribution">Mid Ohio Foot & Ankle — Lewis Center, Ohio</div>
+          <div class="quote-attribution">— Dr. Vincent Staschiak, Mid Ohio Foot & Ankle</div>
         </div>
 
         <h2 style="margin-top:12px;">Why Patients Fly In<br>From Across the Country</h2>
@@ -909,9 +914,9 @@
     <div class="page-grid-right">
       <div id="form-card" class="form-card">
         <div class="form-header">
-          <div class="form-header-eyebrow">Free Consultation — No Obligation</div>
-          <h3>Start Ending<br>Your Heel Pain<br>Today</h3>
-          <p>Tell us about your situation and we'll reach out within 1 business day.</p>
+          <div class="form-header-eyebrow">Schedule Consultation</div>
+          <h3>End Your Heel Pain<br>Without Surgery</h3>
+          <p>Schedule your consultation and we'll reach out within 1 business day.</p>
         </div>
 
         <div class="progress-wrap">
