@@ -240,16 +240,21 @@
     .trust-item svg { color: var(--gold); flex-shrink: 0; }
     .trust-item strong { color: var(--text); font-weight: 500; }
 
-    /* ─── MAIN LAYOUT ─── */
-    .main-grid {
+    /* ─── PAGE GRID ─── */
+    .page-grid {
       display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 64px;
+      grid-template-columns: 1fr 400px;
+      gap: 56px;
       align-items: start;
-      padding: 72px 0 80px;
+      padding: 56px 0 80px;
     }
-    @media (max-width: 900px) {
-      .main-grid { grid-template-columns: 1fr; gap: 48px; }
+    .page-grid-right {
+      position: sticky;
+      top: 72px;
+    }
+    @media (max-width: 960px) {
+      .page-grid { grid-template-columns: 1fr; gap: 48px; }
+      .page-grid-right { position: static; }
     }
 
     /* ─── LEFT COLUMN: COPY ─── */
@@ -753,67 +758,66 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="eyebrow">Non-Surgical Heel Pain Specialist</div>
+  <!-- PAGE GRID: left = all content, right = sticky form -->
+  <div class="container page-grid">
 
-      <h1 class="hero-headline">
-        Your Heel Pain<br>
-        <span class="line-gold">Ends Here.</span>
-        <span class="line-dim">Not Tomorrow.</span>
-      </h1>
+    <!-- LEFT COLUMN -->
+    <div class="page-grid-left">
 
-      <p class="hero-sub">
-        Most treatments mask the problem. <strong>Orthotripsy restores it.</strong>
-        No surgery. No cutting. No compromising your foot's natural structure.
-        Patients travel from across the country to Lewis Center, Ohio
-        — because nothing else comes close.
-      </p>
+      <!-- HERO -->
+      <section class="hero" style="padding-top:56px;">
+        <div class="eyebrow">Non-Surgical Heel Pain Specialist</div>
 
-      <!-- VIDEO -->
-      <div class="video-wrap">
-        <iframe
-          src="https://www.youtube.com/embed/mBknZiLBKsg?start=204&end=280&rel=0&modestbranding=1&controls=0&disablekb=1&fs=0"
-          title="How Orthotripsy Ends Chronic Heel Pain"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
+        <h1 class="hero-headline">
+          Your Heel Pain<br>
+          <span class="line-gold">Ends Here.</span>
+          <span class="line-dim">Not Tomorrow.</span>
+        </h1>
 
-    </div>
+        <p class="hero-sub">
+          Most treatments mask the problem. <strong>Orthotripsy restores it.</strong>
+          No surgery. No cutting. No compromising your foot's natural structure.
+          Patients travel from across the country to Lewis Center, Ohio
+          — because nothing else comes close.
+        </p>
 
-    <!-- TRUST STRIP -->
-    <div class="trust-strip" style="margin-top:48px;">
-      <div class="container">
-        <div class="trust-items">
-          <div class="trust-item">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span><strong>No Surgery Required</strong></span>
-          </div>
-          <div class="trust-item">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span><strong>Same-Day Treatment</strong></span>
-          </div>
-          <div class="trust-item">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
-            <span>Patients travel from <strong>all 50 states</strong></span>
-          </div>
-          <div class="trust-item">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-            <span><strong>Plantar Fasciitis · Achilles Tendinitis</strong></span>
+        <!-- VIDEO -->
+        <div class="video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/mBknZiLBKsg?start=204&end=280&rel=0&modestbranding=1&controls=0&disablekb=1&fs=0"
+            title="How Orthotripsy Ends Chronic Heel Pain"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <!-- TRUST STRIP -->
+        <div class="trust-strip" style="margin-top:40px;margin-left:-24px;margin-right:-24px;">
+          <div style="padding:0 24px;">
+            <div class="trust-items">
+              <div class="trust-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span><strong>No Surgery Required</strong></span>
+              </div>
+              <div class="trust-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span><strong>Same-Day Treatment</strong></span>
+              </div>
+              <div class="trust-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+                <span>Patients travel from <strong>all 50 states</strong></span>
+              </div>
+              <div class="trust-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                <span><strong>Plantar Fasciitis · Achilles Tendinitis</strong></span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- MAIN GRID -->
-  <section>
-    <div class="container main-grid">
-
-      <!-- LEFT: COPY -->
-      <div class="copy-section">
+      <!-- COPY -->
+      <div class="copy-section" style="padding-top:56px;">
         <h2>The Procedure<br>Medicine Forgot to Tell You About</h2>
 
         <p>
@@ -869,12 +873,45 @@
         </p>
       </div>
 
-      <!-- RIGHT: FORM -->
+      <!-- HOW IT WORKS (moved inside left column) -->
+      <div style="padding:72px 0 80px;border-top:1px solid var(--border);margin-top:56px;">
+        <span class="section-eyebrow">The Procedure</span>
+        <h2 class="section-heading">What Happens<br>When You Come In</h2>
+        <p class="section-sub">Orthotripsy is an outpatient procedure. You arrive, you're treated, you go home. Most patients notice a significant difference within 24–72 hours.</p>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-num">01</div>
+            <h4>Consultation & Assessment</h4>
+            <p>We evaluate your specific condition, review imaging if available, and confirm that Orthotripsy is the right protocol for your case.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">02</div>
+            <h4>Targeted Acoustic Treatment</h4>
+            <p>Precise acoustic wave energy is delivered to the damaged tissue. The procedure is performed in-office, no anesthesia required, in under an hour.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">03</div>
+            <h4>Immediate Recovery</h4>
+            <p>There's no surgical recovery period. Most patients walk out under their own power and return to daily activity within 24–48 hours.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">04</div>
+            <h4>Lasting Resolution</h4>
+            <p>The body's natural regenerative process continues for weeks following treatment, progressively restoring tissue integrity and eliminating pain at its source.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-grid-left -->
+
+    <!-- RIGHT COLUMN: STICKY FORM -->
+    <div class="page-grid-right">
       <div id="form-card" class="form-card">
         <div class="form-header">
-          <div class="form-header-eyebrow">Free Consultation Request</div>
-          <h3>Check Your<br>Eligibility</h3>
-          <p>Takes less than 2 minutes. No obligation.</p>
+          <div class="form-header-eyebrow">Free Consultation — No Obligation</div>
+          <h3>Start Ending<br>Your Heel Pain<br>Today</h3>
+          <p>Tell us about your situation and we'll reach out within 1 business day.</p>
         </div>
 
         <div class="progress-wrap">
@@ -1076,41 +1113,9 @@
         </div>
 
       </div><!-- /form-card -->
+    </div><!-- /page-grid-right -->
 
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="how-section">
-    <div class="container">
-      <span class="section-eyebrow">The Procedure</span>
-      <h2 class="section-heading">What Happens<br>When You Come In</h2>
-      <p class="section-sub">Orthotripsy is an outpatient procedure. You arrive, you're treated, you go home. Most patients notice a significant difference within 24–72 hours.</p>
-
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-num">01</div>
-          <h4>Consultation & Assessment</h4>
-          <p>We evaluate your specific condition, review imaging if available, and confirm that Orthotripsy is the right protocol for your case.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-num">02</div>
-          <h4>Targeted Acoustic Treatment</h4>
-          <p>Precise acoustic wave energy is delivered to the damaged tissue. The procedure is performed in-office, no anesthesia required, in under an hour.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-num">03</div>
-          <h4>Immediate Recovery</h4>
-          <p>There's no surgical recovery period. Most patients walk out under their own power and return to daily activity within 24–48 hours.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-num">04</div>
-          <h4>Lasting Resolution</h4>
-          <p>The body's natural regenerative process continues for weeks following treatment, progressively restoring tissue integrity and eliminating pain at its source.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  </div><!-- /page-grid container -->
 
   <!-- FOOTER -->
   <footer>
