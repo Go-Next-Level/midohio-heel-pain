@@ -1409,6 +1409,12 @@
             <button class="btn-submit" onclick="submitForm()">
               Request My Free Consultation
             </button>
+
+            <div class="field-error" id="submit-error" style="display:none;margin-top:10px;text-align:center;">
+              Something went wrong sending your request. Please try again, or call us at
+              <a href="tel:+17408793939" style="color:var(--gold);font-weight:600;">(740) 879-3939</a>.
+            </div>
+
             <button class="btn-back" onclick="prevStep(4)">← Back</button>
 
             <p class="privacy-note" style="margin-top:16px;">
@@ -1577,7 +1583,36 @@
       if (err) err.style.display = 'none';
     }
 
-    function submitForm() {
+    /* ------------------------------------------------------------------
+       LEAD WEBHOOK
+       Paste the GoHighLevel Inbound Webhook URL here.
+       (GHL → Automation → Workflows → new Workflow → trigger
+        "Inbound Webhook" → copy the URL it generates.)
+    ------------------------------------------------------------------ */
+    const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/25ShA0S7ipw26WomAvAk/webhook-trigger/14ab3b22-f5f4-49cb-96ea-426693f6579a';
+
+    // Slug -> human-readable label, so the CRM shows real answers
+    const ANSWER_LABELS = {
+      'under-3mo':         'Less than 3 months',
+      '3-6mo':             '3 – 6 months',
+      '6-12mo':            '6 months – 1 year',
+      '1-3yr':             '1 – 3 years',
+      '3plus':             'More than 3 years',
+      'yes-no-relief':     "Yes — but I haven't found relief",
+      'yes-helped':        'Yes — it helped somewhat',
+      'no':                'No — this is my first step',
+      'yes-definitely':    "Yes — I'll do whatever it takes to end this pain",
+      'yes-maybe':         "Possibly — I'd like to know more first",
+      'local':             'I live nearby already',
+      'life-changing':     'It would be completely life-changing',
+      'return-activities': "I could return to activities I've had to give up",
+      'sleep-work':        "I'd finally sleep better and function at work",
+      'all':               'All of the above — yes, please',
+    };
+
+    const label = (v) => (v ? (ANSWER_LABELS[v] || v) : '');
+
+    async function submitForm() {
       const agree = document.getElementById('agree');
       const agreeErr = document.getElementById('agree-error');
       if (!agree.checked) {
@@ -1586,26 +1621,81 @@
       }
       agreeErr.style.display = 'none';
 
-      // Collect data
+      const btn = document.querySelector('.btn-submit');
+      const sendErr = document.getElementById('submit-error');
+      sendErr.style.display = 'none';
+
+      const fullName = document.getElementById('name').value.trim();
+      const nameParts = fullName.split(/\s+/);
+      const firstName = nameParts.shift() || '';
+      const lastName = nameParts.join(' ');
+
+      const params = new URLSearchParams(location.search);
+      const utm = {};
+      ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid','gclid']
+        .forEach((k) => { if (params.get(k)) utm[k] = params.get(k); });
+
+      const durationVal = document.getElementById('duration').value;
+      const seendocVal  = document.querySelector('input[name="seendoc"]:checked')?.value;
+      const travelVal   = document.querySelector('input[name="travel"]:checked')?.value;
+      const impactVal   = document.querySelector('input[name="impact"]:checked')?.value;
+
       const data = {
-        name:     document.getElementById('name').value,
-        phone:    document.getElementById('phone').value,
-        email:    document.getElementById('email').value,
-        duration: document.getElementById('duration').value,
-        seendoc:  document.querySelector('input[name="seendoc"]:checked')?.value,
-        travel:   document.querySelector('input[name="travel"]:checked')?.value,
-        impact:   document.querySelector('input[name="impact"]:checked')?.value,
+        // Contact — these map straight onto GHL's standard contact fields
+        full_name:  fullName,
+        first_name: firstName,
+        last_name:  lastName,
+        phone:      document.getElementById('phone').value.trim(),
+        email:      document.getElementById('email').value.trim(),
+
+        // Qualification answers, human-readable
+        pain_duration:      label(durationVal),
+        seen_doctor:        label(seendocVal),
+        travel_willingness: label(travelVal),
+        pain_free_impact:   label(impactVal),
+
+        // Raw slugs too, for workflow branching / filtering
+        pain_duration_value:      durationVal || '',
+        seen_doctor_value:        seendocVal || '',
+        travel_willingness_value: travelVal || '',
+        pain_free_impact_value:   impactVal || '',
+
+        insurance_acknowledged: true,
+
+        // Attribution
+        source:       'Heel Pain Landing Page',
+        page_url:     location.href,
+        referrer:     document.referrer || '',
+        submitted_at: new Date().toISOString(),
+        ...utm,
       };
 
-      // Hide form steps & progress, show success
-      document.querySelector('.progress-wrap').style.display = 'none';
-      document.querySelector('.form-body').style.display = 'none';
-      const success = document.getElementById('success-screen');
-      success.style.display = 'block';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
 
-      // TODO: wire to Web3Forms or CRM webhook
-      // fetch('https://api.web3forms.com/submit', { method:'POST', ... })
-      console.log('Form submitted:', data);
+      try {
+        if (!WEBHOOK_URL) throw new Error('WEBHOOK_URL is not configured');
+
+        const res = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error('Webhook responded ' + res.status);
+
+        // Hide form steps & progress, show success
+        document.querySelector('.progress-wrap').style.display = 'none';
+        document.querySelector('.form-body').style.display = 'none';
+        document.getElementById('success-screen').style.display = 'block';
+
+        if (typeof gtag === 'function') gtag('event', 'generate_lead');
+        if (typeof fbq === 'function') fbq('track', 'Lead');
+      } catch (err) {
+        console.error('Lead submission failed:', err);
+        sendErr.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Request My Free Consultation';
+      }
     }
 
     // Video thumbnail switcher
