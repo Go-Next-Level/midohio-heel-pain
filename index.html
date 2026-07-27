@@ -633,36 +633,6 @@
     }
     .privacy-note svg { vertical-align: middle; margin-right: 4px; }
 
-    /* Success screen */
-    .success-screen {
-      display: none;
-      text-align: center;
-      padding: 40px 28px;
-    }
-    .success-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: rgba(76,175,125,0.12);
-      border: 1px solid rgba(76,175,125,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-    }
-    .success-screen h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 0.03em;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-    .success-screen p {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
     /* ─── HOW IT WORKS ─── */
     .how-section {
       padding: 80px 0;
@@ -1425,20 +1395,6 @@
 
         </div><!-- /form-body -->
 
-        <!-- SUCCESS -->
-        <div class="success-screen" id="success-screen">
-          <div class="success-icon">
-            <svg width="28" height="28" fill="none" stroke="#4caf7d" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
-          <h3>You're All Set.</h3>
-          <p>
-            We've received your request and will reach out within 1 business day
-            to discuss your situation and next steps.<br><br>
-            <strong style="color:var(--text);">Mid Ohio Foot & Ankle</strong><br>
-            Lewis Center, Ohio
-          </p>
-        </div>
-
       </div><!-- /form-card -->
     </div><!-- /page-grid-right -->
 
@@ -1683,13 +1639,10 @@
         });
         if (!res.ok) throw new Error('Webhook responded ' + res.status);
 
-        // Hide form steps & progress, show success
-        document.querySelector('.progress-wrap').style.display = 'none';
-        document.querySelector('.form-body').style.display = 'none';
-        document.getElementById('success-screen').style.display = 'block';
-
-        if (typeof gtag === 'function') gtag('event', 'generate_lead');
-        if (typeof fbq === 'function') fbq('track', 'Lead');
+        // Redirect to the thank-you page, carrying any ad params through
+        // so the conversion pageview keeps its attribution.
+        const qs = location.search ? location.search : '';
+        location.href = '/thank-you' + qs;
       } catch (err) {
         console.error('Lead submission failed:', err);
         sendErr.style.display = 'block';
