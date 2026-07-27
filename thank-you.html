@@ -14,9 +14,28 @@
   <!-- ================================================================
        CONVERSION TRACKING
        This page exists so ad platforms have a dedicated URL to fire a
-       conversion against. Paste the GA4 tag and the Meta pixel here.
-       The events below fire on page load — see the script at the bottom.
+       conversion against. The Lead event fires on load — see the script
+       at the bottom. GA4 tag still to be added.
   ================================================================= -->
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '568116904981903');
+  fbq('track', 'PageView');
+  fbq('track', 'Lead');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=568116904981903&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 
   <style>
     :root {
@@ -408,11 +427,11 @@
   </footer>
 
   <script>
-    /* Fire the lead conversion on load. Both are guarded, so this is inert
-       until the GA4 tag and Meta pixel are added to the <head> above. */
+    /* Meta's Lead event fires in the <head> alongside the pixel.
+       This is the GA4 equivalent — guarded, so it stays inert until the
+       GA4 tag is added. */
     (function () {
       if (typeof gtag === 'function') gtag('event', 'generate_lead');
-      if (typeof fbq === 'function') fbq('track', 'Lead');
     })();
   </script>
 
