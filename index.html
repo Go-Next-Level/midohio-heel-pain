@@ -269,13 +269,12 @@
       padding: 56px 0 80px;
     }
     .page-grid-right {
-      position: sticky;
-      top: 72px;
+      /* Offset aligns the card's top edge with the hero headline. */
       padding-top: 110px;
     }
     @media (max-width: 960px) {
       .page-grid { grid-template-columns: 1fr; gap: 48px; }
-      .page-grid-right { position: static; }
+      .page-grid-right { padding-top: 0; }
     }
 
     /* ─── LEFT COLUMN: COPY ─── */
@@ -375,21 +374,12 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
-      position: sticky;
-      top: 80px;
-      max-height: calc(100vh - 100px);
       display: flex;
       flex-direction: column;
+      /* Clears the sticky header when a step change scrolls the card
+         back into view. */
+      scroll-margin-top: 128px;
     }
-    .form-body {
-      overflow-y: auto;
-      flex: 1;
-      scrollbar-width: thin;
-      scrollbar-color: var(--border) transparent;
-    }
-    .form-body::-webkit-scrollbar { width: 4px; }
-    .form-body::-webkit-scrollbar-track { background: transparent; }
-    .form-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
     .form-header {
       background: linear-gradient(135deg, #1a1510 0%, #151208 100%);
       border-bottom: 1px solid var(--border);
@@ -1487,7 +1477,7 @@
       document.getElementById('step-' + n).classList.add('active');
       updateProgress(n);
       currentStep = n;
-      document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function validateStep1() {
