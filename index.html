@@ -268,13 +268,32 @@
       align-items: start;
       padding: 56px 0 80px;
     }
+    /* Desktop: hero and the rest stack in column 1, form sits in column 2.
+       Placement is explicit so the DOM can keep the form last while the
+       mobile layout reorders it up under the videos. */
+    .page-grid-hero { grid-column: 1; grid-row: 1; }
+    .page-grid-rest { grid-column: 1; grid-row: 2; }
     .page-grid-right {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: start;
       /* Offset aligns the card's top edge with the hero headline. */
       padding-top: 110px;
     }
+
     @media (max-width: 960px) {
       .page-grid { grid-template-columns: 1fr; gap: 48px; }
-      .page-grid-right { padding-top: 0; }
+      /* Drop the explicit placement and order by intent instead, so the
+         form lands directly beneath the video block. */
+      .page-grid-hero,
+      .page-grid-rest,
+      .page-grid-right {
+        grid-column: auto;
+        grid-row: auto;
+      }
+      .page-grid-hero  { order: 1; }
+      .page-grid-right { order: 2; padding-top: 0; }
+      .page-grid-rest  { order: 3; }
     }
 
     /* ─── LEFT COLUMN: COPY ─── */
@@ -641,6 +660,40 @@
     }
     .privacy-note svg { vertical-align: middle; margin-right: 4px; }
 
+    /* ─── INLINE CTA (ties each section back to the form) ─── */
+    .cta-inline {
+      text-align: center;
+      padding: 36px 0 8px;
+    }
+    .cta-inline-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      width: 100%;
+      max-width: 380px;
+      background: var(--teal);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 15px 26px;
+      min-height: 52px;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .cta-inline-btn:hover { background: #156b61; }
+    .cta-inline-btn:active { transform: translateY(1px); }
+    .cta-inline-btn:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+    .cta-inline-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
     /* ─── HOW IT WORKS ─── */
     .how-section {
       padding: 80px 0;
@@ -969,7 +1022,7 @@
   <div class="container page-grid">
 
     <!-- LEFT COLUMN -->
-    <div class="page-grid-left">
+    <div class="page-grid-hero">
 
       <!-- HERO -->
       <section class="hero" style="padding-top:56px;">
@@ -1038,6 +1091,11 @@
           </div>
         </div>
       </section>
+
+    </div><!-- /page-grid-hero -->
+
+    <!-- REST OF THE CONTENT: on mobile this falls below the form -->
+    <div class="page-grid-rest">
 
       <!-- COPY -->
       <div class="copy-section" style="padding-top:56px;">
@@ -1136,6 +1194,13 @@
         <div class="ebooks-banner-arrow">→</div>
       </a>
 
+      <div class="cta-inline">
+        <button type="button" class="cta-inline-btn" onclick="scrollToForm()">
+          See If Orthotripsy Is Right For You
+        </button>
+        <p class="cta-inline-note">Takes under a minute — no obligation.</p>
+      </div>
+
       <!-- CONDITIONS WE TREAT -->
       <div class="conditions-section">
         <span class="section-eyebrow">Conditions Treated</span>
@@ -1167,6 +1232,13 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="cta-inline">
+        <button type="button" class="cta-inline-btn" onclick="scrollToForm()">
+          Request My Free Consultation
+        </button>
+        <p class="cta-inline-note">We'll reach out within 1 business day.</p>
       </div>
 
       <!-- REGENERATIVE MEDICINE -->
@@ -1202,7 +1274,14 @@
         </div>
       </div>
 
-    </div><!-- /page-grid-left -->
+      <div class="cta-inline">
+        <button type="button" class="cta-inline-btn" onclick="scrollToForm()">
+          Start My Consultation Request
+        </button>
+        <p class="cta-inline-note">Lewis Center, Ohio — patients from all 50 states.</p>
+      </div>
+
+    </div><!-- /page-grid-rest -->
 
     <!-- RIGHT COLUMN: STICKY FORM -->
     <div class="page-grid-right">
@@ -1470,6 +1549,20 @@
       document.getElementById('step-num').textContent = step;
       document.getElementById('progress-label').innerHTML =
         `Step <span id="step-num">${step}</span> of <span>${totalSteps}</span> — ${stepLabels[step-1]}`;
+    }
+
+    /* Inline CTAs throughout the page all route back to the form. */
+    function scrollToForm() {
+      const card = document.getElementById('form-card');
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Focus the first empty field on the current step once the scroll
+      // settles, so the CTA drops the user straight into typing.
+      const step = document.getElementById('step-' + currentStep);
+      const field = step && step.querySelector('input[type="text"], input[type="tel"], input[type="email"], select');
+      if (field && !field.value) {
+        setTimeout(() => field.focus({ preventScroll: true }), 500);
+      }
     }
 
     function showStep(n) {
